@@ -29,11 +29,16 @@ class UserManager(models.Manager):
             errors['email'] = "Invalid email address!"
         return errors
 
-class User(models.Model):
-    username = models.CharField(max_length=30)
-    password = models.CharField(max_length=100)
-    email = models.TextField()
-    objects = UserManager()
+# class User(models.Model):
+#     username = models.CharField(max_length=30)
+#     first_name = models.CharField(max_length=30)
+#     last_name = models.CharField(max_length=30)
+#     email = models.CharField(max_length=30)
+#     password = models.CharField(max_length=20)
+#     confirm_password = models.CharField(max_length=20)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+#     objects = UserManager()
 
 class Workout(models.Model):
     title = models.CharField(max_length=100)

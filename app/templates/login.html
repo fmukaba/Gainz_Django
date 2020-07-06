@@ -19,10 +19,10 @@
     {% endif %}
     <form action="/login" method="post">
         {% csrf_token %}
-        <p>Username: <input name="username" type="text"></p>
-        <p>Password <input name="password" type="text"></p>
+        {{ logForm.as_p }}
         <button type="submit">Submit</button>
     </form>
+    
     <h2>Not a user? Please register <a href="/register">here</a></2>
 </body>
 </html>

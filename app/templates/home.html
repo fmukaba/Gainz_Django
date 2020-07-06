@@ -9,8 +9,13 @@
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
 </head>
 <body>
-    <h1> Welcome Home </h1>
-    <!-- For development -->
-    <h1> Your session id is : {{ request.session.userid }}</h1> 
+    <h1> 
+        Welcome Home 
+        {% if user.is_authenticated %}
+            {{ user.username }}
+            {{ user.username }}
+            {{ user.email }}
+        {% endif %}
+    </h1>
 </body>
 </html>

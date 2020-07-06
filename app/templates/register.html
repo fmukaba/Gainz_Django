@@ -17,18 +17,10 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <!-- <form action="/register" method="post">
-        {% csrf_token %}
-        <p>Email: <input name="email" type="email"></p>
-        <p>Username: <input name="username" type="text"></p>
-        <p>Password <input name="password" type="text"></p>  
-        <button type="submit">Submit</button>
-    </form> -->
     <form class="" action="/register" method="post">
         {% csrf_token %}
         {{ regForm.as_p }}
-        <!--  ".as_p" is an example of an option you can attach to the form inputs
-        "as_table" and "as_ul" are a few others...-->
+      
         <button type="submit" value="register">Submit</button>
       </form>
 </body>

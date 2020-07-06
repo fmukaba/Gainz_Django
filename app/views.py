@@ -1,15 +1,22 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import User 
-from .forms import RegisterForm
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+# from .models import User 
+from .forms import RegisterForm, LoginForm
 
 def login(request):
     if request.method == "GET":
-        return render(request, "login.html")
-    else:    
+        form = LoginForm()
+        context = { "logForm": form }
+        return render(request, "login.html", context)
+    else:   
+       
         errors = User.objects.login_validator(request.POST)
         if len(errors) > 0:
             for key, value in errors.items():
+                # the message object will be held until the next time a page is rendered
                 messages.error(request, value)
             return redirect("/login")
         else: 
@@ -28,23 +35,34 @@ def register(request):
         form = RegisterForm()
         context = { "regForm": form }
         return render(request, "register.html", context)
-    else:    
-        errors = User.objects.register_validator(request.POST)
+    else: 
+        print(request.POST) 
+        form = UserCreationForm(request.POST) 
+        errors = form.errors
+        
         if len(errors) > 0:
             for key, value in errors.items():
                 messages.error(request, value)
             return redirect("/register")
         else: 
+            new_user = form.save(commit=False)
+            first_name = request.POST["first_name"]
+            last_name = request.POST["last_name"]
             email = request.POST["email"]
-            username = request.POST["username"] 
-            password = request.POST["password"] # hash password later Bcrypt
-            new_user = User(email=email, username=username, password=password)
+            if first_name:
+                new_user.first_name = first_name  
+            if last_name:
+                new_user.last_name = last_name
+            if email:
+                new_user.email = email
             new_user.save()
+
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password1"]
+            user = authenticate(username=username, password=password)
+
+            auth_login(request, user)
             return redirect("/home")
 
 def home(request):
     return render(request, "home.html")
-
-def list_users(request):
-    context = {"users": User.objects.all()}
-    return render(request, "list_users.html", context)
