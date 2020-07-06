@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+    <h1> Register </h1> 
+    {% if messages %}
+    <ul class="messages">    
+        {% for message in messages %}    
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <!-- <form action="/register" method="post">
+        {% csrf_token %}
+        <p>Email: <input name="email" type="email"></p>
+        <p>Username: <input name="username" type="text"></p>
+        <p>Password <input name="password" type="text"></p>  
+        <button type="submit">Submit</button>
+    </form> -->
+    <form class="" action="/register" method="post">
+        {% csrf_token %}
+        {{ regForm.as_p }}
+        <!--  ".as_p" is an example of an option you can attach to the form inputs
+        "as_table" and "as_ul" are a few others...-->
+        <button type="submit" value="register">Submit</button>
+      </form>
+</body>
+</html>
