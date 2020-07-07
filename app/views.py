@@ -70,6 +70,14 @@ def home(request):
     return render(request, "home.html")
 
 @login_required
+def list_exercises(request):
+    return render(request, "list_exercises.html")
+
+@login_required
+def add(request):
+    return render(request, "add.html")
+
+@login_required
 def logout(request):
     auth_logout(request)
     return redirect('/login')

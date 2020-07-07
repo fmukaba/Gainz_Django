@@ -1,11 +1,10 @@
 body {
-    background-color: aquamarine;
-    margin : auto 540px auto;
+    background-color: azure;
+    
 }
 
 h1 {
-    margin-bottom: 50px;
-    margin-top : 50px;
+    margin-top : 100px;
 }
 
 button {
@@ -18,3 +17,4 @@ button {
 .left {
     margin-left: 70px;
 }
+
