@@ -20,9 +20,9 @@
 
     {% if next %} 
         <p>Please log in first</p>
-    {% endif }
+    {% endif %}
 
-    <form action="{% %}" method="post">
+    <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
         {{ logForm.as_p }}
         

@@ -11,22 +11,21 @@ def login(request):
         context = { "logForm": form }
         return render(request, "login.html", context)
     else:   
-        errors = User.objects.login_validator(request.POST)
+        next = request.GET.get('next')
+        form = LoginForm(request.POST)
+        errors = form.errors
         if len(errors) > 0:
             for key, value in errors.items():
                 # the message object will be held until the next time a page is rendered
                 messages.error(request, value)
             return redirect("/login")
         else: 
-            username = request.POST["username"] 
-            password = request.POST["password"] # hash password later Bcrypt
-            user = User.objects.filter(username=username)
-            logged_user = user[0]
-            
-            if logged_user.password == password:
-                request.session['userid'] = logged_user.id
-                return redirect("/home")
-            return redirect("/login")
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            if next:
+                return redirect(next)
 
 def register(request):
     if request.method == "GET":
@@ -65,6 +64,6 @@ def register(request):
 def home(request):
     return render(request, "home.html")
 
-def logout_view(request):
+def logout(request):
     auth_logout(request)
-    return redirect('/')
+    return redirect('/login')
