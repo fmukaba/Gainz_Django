@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, logout as auth_logout, login as auth_login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, LoginForm
 
 def login(request):
@@ -64,9 +65,11 @@ def register(request):
             auth_login(request, user)
             return redirect("/home")
 
+@login_required
 def home(request):
     return render(request, "home.html")
 
+@login_required
 def logout(request):
     auth_logout(request)
     return redirect('/login')
