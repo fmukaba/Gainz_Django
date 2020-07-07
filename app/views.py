@@ -25,7 +25,7 @@ def login(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
-            login(request, user)
+            auth_login(request, user)
             if next:
                 return redirect(next)
             return redirect("/home")

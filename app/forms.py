@@ -27,10 +27,11 @@ class LoginForm(forms.Form):
         if username and password:
             user = authenticate(username=username, password=password)
             if not user:
-                raise forms.ValidationError('This user does not exist')
-            if not user.check_password(password):
-                raise forms.ValidationError('Incorrect password')
-            if not user.is_active:
-                raise forms.ValidationError('This user is not active')
+                raise forms.ValidationError('Credentials not matched, try again!')
+            # TODO These won't work - fix 
+            elif not user.check_password(password):
+                raise forms.ValidationError('Password incorrect.')
+            elif not user.is_active:
+                raise forms.ValidationError('This account is not active.')
         return super(LoginForm, self).clean(*args, **kwargs)
     
