@@ -22,7 +22,7 @@
         <p>Please log in first</p>
     {% endif %}
 
-    <form action="{% url 'login' %}" method="post">
+    <form action="/login" method="post">
         {% csrf_token %}
         {{ logForm.as_p }}
         

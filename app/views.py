@@ -9,12 +9,14 @@ def login(request):
     if request.method == "GET":
         form = LoginForm()
         context = { "logForm": form }
+
         return render(request, "login.html", context)
     else:   
-        next = request.GET.get('next')
+        next = request.POST['next']
         form = LoginForm(request.POST)
         errors = form.errors
-        if len(errors) > 0:
+        print(errors)
+        if not form.is_valid():
             for key, value in errors.items():
                 # the message object will be held until the next time a page is rendered
                 messages.error(request, value)
@@ -26,6 +28,7 @@ def login(request):
             login(request, user)
             if next:
                 return redirect(next)
+            return redirect("/home")
 
 def register(request):
     if request.method == "GET":
