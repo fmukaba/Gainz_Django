@@ -17,10 +17,17 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <form action="/login" method="post">
+
+    {% if next %} 
+        <p>Please log in first</p>
+    {% endif }
+
+    <form action="{% %}" method="post">
         {% csrf_token %}
         {{ logForm.as_p }}
+        
         <button type="submit">Submit</button>
+        <input type="hidden" name="next" value="{{next}}">
     </form>
     
     <h2>Not a user? Please register <a href="/register">here</a></2>

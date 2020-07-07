@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, logout as auth_logout, login as auth_login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-# from .models import User 
 from .forms import RegisterForm, LoginForm
 
 def login(request):
@@ -12,7 +11,6 @@ def login(request):
         context = { "logForm": form }
         return render(request, "login.html", context)
     else:   
-       
         errors = User.objects.login_validator(request.POST)
         if len(errors) > 0:
             for key, value in errors.items():
@@ -66,3 +64,7 @@ def register(request):
 
 def home(request):
     return render(request, "home.html")
+
+def logout_view(request):
+    auth_logout(request)
+    return redirect('/')
