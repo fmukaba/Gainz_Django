@@ -76,11 +76,11 @@ def list_exercises(request):
     ids = set()
     workouts = request.user.workouts.all()
     for w in workouts:
-        ids.add(w.id)
-    
-    for id in ids:
-       ex = Exercise.objects.get(id=id)
-       exercises.add(ex)
+        exercises = w.get_exercises()
+        # ids.add(w.id)
+    # for id in ids:
+    #    ex = Exercise.objects.get(id=id)
+    #    exercises.add(ex)
     context = {'exercises': exercises}
 
     return render(request, "list_exercises.html", context)
@@ -89,6 +89,7 @@ def list_exercises(request):
 def add(request):
     return render(request, "add.html")
 
+@login_required
 def create_exercise(request):
     if request.method == "GET":
         form = CreateExerciseForm()
@@ -99,7 +100,6 @@ def create_exercise(request):
         errors = form.errors
         print(errors)
         return  redirect("/add")
-
 
 @login_required
 def logout(request):
