@@ -13,10 +13,9 @@
 
     <style>
     .navbar {
-        background: #cf1010;  /* fallback for old browsers */
-        background: -webkit-linear-gradient(to right, #0088ce, #005b94);  /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to right,#005b94, #5bc0de ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-        
+        background: #5bc0de;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right,#005b94, #5bc0de);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to left,#005b94, #5bc0de ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ 
       }
       </style>
 </head>
@@ -34,41 +33,21 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/add">Add</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="/list_exercises">List</a>
                 </li> 
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/help">Help</a>
+                    <a class="nav-link active" href="/help">Help</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>
+
             </ul>
         </div>
     </nav> 
-
-    <h1>List of all exercises</h1>
-    <table class="table table-striped">
-        <tr>
-            <th scope="col">Title</th>
-            <th scope="col">Reps</th>
-            <th scope="col">Sets</th>
-            <th scope="col">Description</th>
-            <th scope="col">Link</th>
-            <th scope="col">Actions</th>
-        </tr>
-        {% for ex in exercises %}
-        <tr>
-            <td>{{ex.title}}</td>
-            <td>{{ex.sets}}</td>
-            <td>{{ex.reps}}</td>          
-            <td>{{ex.description}}</td>
-            <td>{{ex.link}}</td>
-            <td>{{ex.id}}</td>
-        </tr>  
-        {% endfor %}
-    </table>
+    <h1> Helpful stuffs </h1>
 </body>
 </html>

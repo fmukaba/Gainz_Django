@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 import re
 
 class UserManager(models.Manager):
@@ -43,11 +44,20 @@ class UserManager(models.Manager):
 class Workout(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    user = models.ForeignKey(User, related_name="workouts", on_delete = models.CASCADE)
+    # exercises - list of all exercises belonging
+
+    def __repr__(self):
+        return f"title: {self.title}"
 
 class Exercise(models.Model):
     title = models.CharField(max_length=100)
     sets = models.IntegerField()
     reps = models.IntegerField()
     description = models.TextField()
-    timed = models.BooleanField()
     time = models.CharField(max_length=50)
+    link = models.TextField()
+    workout = models.ForeignKey(Workout, related_name="exercises", on_delete = models.CASCADE)
+
+    def __repr__(self):
+        return f"title: {self.title}"
