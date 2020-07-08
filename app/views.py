@@ -73,17 +73,9 @@ def home(request):
 
 @login_required
 def list_exercises(request):
-    exercises = set()
-    ids = set()
-    workouts = request.user.workouts.all()
-    for w in workouts:
-        exercises = w.get_exercises()
-        # ids.add(w.id)
-    # for id in ids:
-    #    ex = Exercise.objects.get(id=id)
-    #    exercises.add(ex)
+    customer = request.user.customer
+    exercises = customer.get_all_exercises()
     context = {'exercises': exercises}
-
     return render(request, "list_exercises.html", context)
 
 @login_required
@@ -99,8 +91,12 @@ def create_exercise(request):
     else:   
         form = CreateExerciseForm(request.POST)
         errors = form.errors
-        print(errors)
-        return  redirect("/add")
+        if len(errors) > 0:
+            for key, value in errors.items():
+                messages.error(request, value)
+            return redirect("/add/create_exercise") 
+        exercise = form.save(commit=True)
+        return  redirect("/list_exercises")
 
 @login_required
 def logout(request):

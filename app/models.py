@@ -31,8 +31,10 @@ import re
 #         return errors
     
 
-# class User():
-    # username, password, email, first name, last name    
+# class auth.models.User():
+    # username, password, email, first name, last name  
+    # workouts - list of all workouts belonging
+    # exercises - list of all exercises belonging  
     # Customer : customer linked to this user 
     
 class Customer(models.Model):
@@ -40,7 +42,7 @@ class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     
     def get_all_exercises(self):
-        return "Keep going"
+        return self.user.exercises.all()
     def get_all_workouts(self):
         pass
     def get_exercise(self, id):
@@ -64,7 +66,6 @@ class Workout(models.Model):
     def __str__(self):
         return f"title: {self.title}"
 
-
 class Exercise(models.Model):
     title = models.CharField(max_length=50)
     sets = models.IntegerField()
@@ -72,9 +73,6 @@ class Exercise(models.Model):
     time = models.IntegerField()
     link = models.TextField()
     description = models.TextField()
-    # TODO need to think about this. if user creates workout should we tie it immediately to a workout?
-    # Or create a workout (right after user registration, at id zero hence) in database that will refer to all the exercises
-    # And then update exercises to other workouts if user wants to create workouts
     user = models.ForeignKey(User, related_name="exercises", on_delete = models.CASCADE)
     workout = models.ForeignKey(Workout, related_name="exercises", on_delete = models.CASCADE, blank=True, null=True)
 

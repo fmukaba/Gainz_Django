@@ -40,8 +40,14 @@ class CreateExerciseForm(forms.ModelForm):
     sets = forms.IntegerField(initial=1)
     reps = forms.IntegerField(initial=1)
     time = forms.IntegerField(initial=1)
-    link = forms.CharField(max_length=20,widget=forms.TextInput)
-    description = forms.CharField(max_length=100, widget=forms.Textarea)
+    link = forms.CharField(max_length=1000,widget=forms.TextInput, initial=" ")
+    description = forms.CharField(max_length=100, widget=forms.Textarea, initial=" ")
     class Meta:
         model = Exercise
         fields = ['title']
+        
+        def clean(self, *args, **kwargs):
+            # check for duplicated title+reps+sets+time
+            if not self.title:
+                raise forms.ValidationError('Credentials not matched, try again!')
+            return super(CreateExerciseForm, self).clean(*args, **kwargs)
