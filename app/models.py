@@ -77,7 +77,7 @@ class Exercise(models.Model):
     workout = models.ForeignKey(Workout, related_name="exercises", on_delete = models.CASCADE, blank=True, null=True)
 
     def __repr__(self):
-        return f"title: {self.title}"
+        return f"title: {self.title}, sets: {self.sets}, description: {self.description}"
     
     def __str__(self):
-        return f"title: {self.title}"
+        return f"title: {self.title}, sets: {self.sets}, description: {self.description}"

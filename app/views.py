@@ -95,8 +95,9 @@ def create_exercise(request):
             for key, value in errors.items():
                 messages.error(request, value)
             return redirect("/add/create_exercise") 
-        exercise = form.save(commit=True)
-        return  redirect("/list_exercises")
+        new_exercise = form.save(commit=False)
+        print(new_exercise)
+        return  redirect("/add/create_exercise")
 
 @login_required
 def logout(request):
