@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, LoginForm, CreateExerciseForm
-from .models import Workout, Exercise
+from .models import Workout, Exercise, Customer
 
 def login(request):
     if request.method == "GET":
@@ -38,7 +38,6 @@ def register(request):
         context = { "regForm": form }
         return render(request, "register.html", context)
     else: 
-        print(request.POST) 
         form = UserCreationForm(request.POST) 
         errors = form.errors
         
@@ -58,6 +57,8 @@ def register(request):
             if email:
                 new_user.email = email
             new_user.save()
+            customer = Customer(user=new_user, username=new_user.username)
+            customer.save()
 
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password1"]

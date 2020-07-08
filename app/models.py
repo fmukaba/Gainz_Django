@@ -32,14 +32,15 @@ import re
     
 
 # class User():
-    # tilte, password, email, first name, last name    
+    # username, password, email, first name, last name    
     # Customer : customer linked to this user 
     
 class Customer(models.Model):
+    username = models.CharField(max_length=30)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     
     def get_all_exercises(self):
-        pass
+        return "Keep going"
     def get_all_workouts(self):
         pass
     def get_exercise(self, id):

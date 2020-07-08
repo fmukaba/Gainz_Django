@@ -6,7 +6,7 @@ from .models import Exercise, Workout
 
 
 class RegisterForm(forms.ModelForm):
-    username = forms.CharField(max_length=20, widget=forms.TextInput)
+    username = forms.CharField(max_length=30, widget=forms.TextInput)
     password1 = forms.CharField(max_length=20, widget=forms.PasswordInput, label="Password")
     password2 = forms.CharField(max_length=20,widget=forms.PasswordInput, label="Confirm password")
 
@@ -18,7 +18,7 @@ class RegisterForm(forms.ModelForm):
                  ]
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=20)
+    username = forms.CharField(max_length=30)
     password = forms.CharField(max_length=20, widget=forms.PasswordInput)
    
     def clean(self, *args, **kwargs):
