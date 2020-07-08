@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, logout as auth_logout, login as au
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, CreateExerciseForm
 from .models import Workout, Exercise
 
 def login(request):
@@ -88,6 +88,18 @@ def list_exercises(request):
 @login_required
 def add(request):
     return render(request, "add.html")
+
+def create_exercise(request):
+    if request.method == "GET":
+        form = CreateExerciseForm()
+        context = { "form": form }
+        return render(request, "create_exercise.html", context)
+    else:   
+        form = CreateExerciseForm(request.POST)
+        errors = form.errors
+        print(errors)
+        return  redirect("/add")
+
 
 @login_required
 def logout(request):

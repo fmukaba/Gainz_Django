@@ -55,9 +55,13 @@ class Exercise(models.Model):
     sets = models.IntegerField()
     reps = models.IntegerField()
     description = models.TextField()
-    time = models.CharField(max_length=50)
+    time = models.IntegerField()
     link = models.TextField()
-    workout = models.ForeignKey(Workout, related_name="exercises", on_delete = models.CASCADE)
+    # TODO need to think about this. if user creates workout should we tie it immediately to a workout?
+    # Or create a workout (right after user registration, at id zero hence) in database that will refer to all the exercises
+    # And then update exercises to other workouts if user wants to create workouts
+
+    workout = models.ForeignKey(Workout, related_name="exercises", on_delete = models.CASCADE)  # blank=True, null=True
 
     def __repr__(self):
         return f"title: {self.title}"

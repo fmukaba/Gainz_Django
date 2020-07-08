@@ -1,7 +1,8 @@
 from django import forms
-from django.contrib.auth.models import User
-# from django.contrib.auth.forms import us
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from .models import Exercise, Workout
+
 
 
 class RegisterForm(forms.ModelForm):
@@ -23,7 +24,7 @@ class LoginForm(forms.Form):
     def clean(self, *args, **kwargs):
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
-
+        # TODO
         if username and password:
             user = authenticate(username=username, password=password)
             if not user:
@@ -34,4 +35,13 @@ class LoginForm(forms.Form):
             elif not user.is_active:
                 raise forms.ValidationError('This account is not active.')
         return super(LoginForm, self).clean(*args, **kwargs)
-    
+
+class CreateExerciseForm(forms.ModelForm):
+    sets = forms.IntegerField(initial=1)
+    reps = forms.IntegerField(initial=1)
+    time = forms.IntegerField(initial=1)
+    link = forms.CharField(max_length=20,widget=forms.TextInput)
+    description = forms.CharField(max_length=100, widget=forms.Textarea)
+    class Meta:
+        model = Exercise
+        fields = ['title']
