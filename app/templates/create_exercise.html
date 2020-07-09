@@ -59,7 +59,7 @@
         {% endif %}
         <form method="post">
             {% csrf_token %}
-            {{form.as_p}}
+            {{ form.as_p }}
             <button type="submit" value="register">Submit</button>
         </form>
     </main>

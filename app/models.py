@@ -61,10 +61,10 @@ class Workout(models.Model):
         return self.exercises.all()
 
     def __repr__(self):
-        return f"title: {self.title}"
+        return f"title: {self.title}, description: {self.description}"
 
     def __str__(self):
-        return f"title: {self.title}"
+        return f"title: {self.title}, description: {self.description}"
 
 class Exercise(models.Model):
     title = models.CharField(max_length=50)

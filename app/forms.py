@@ -35,20 +35,35 @@ class LoginForm(forms.Form):
                 raise forms.ValidationError('This account is not active.')
         return super(LoginForm, self).clean(*args, **kwargs)
 
-class CreateExerciseForm(forms.ModelForm):
+class CreateExerciseForm(forms.Form):
+    title = forms.CharField(max_length=50,widget=forms.TextInput, initial=" ")
     sets = forms.IntegerField(initial=1)
     reps = forms.IntegerField(initial=1)
     time = forms.IntegerField(initial=1)
     link = forms.CharField(max_length=1000,widget=forms.TextInput, initial=" ")
     description = forms.CharField(max_length=100, widget=forms.Textarea, initial=" ")
     
+    def extract(self):
+        errors = self.errors
 
-    class Meta:
-        model = Exercise
-        fields = ['title']
+        if self.is_valid():
+            obj = Exercise(
+                title=self.cleaned_data['title'],
+                sets=self.cleaned_data['sets'],
+                reps=self.cleaned_data['reps'],  
+                time=self.cleaned_data['time'],      
+                link=self.cleaned_data['link'], 
+                description=self.cleaned_data['description']         
+                )
+            return obj
+        return None
+
+    # class Meta:
+    #     model = Exercise
+    #     fields = ['title']
         
-    def clean(self, *args, **kwargs):
-        # check for duplicated title+reps+sets+time
-        if not self.cleaned_data.get('title'):
-            raise forms.ValidationError('Credentials not matched, try again!')
-        return super(CreateExerciseForm, self).clean(*args, **kwargs)
+    # def clean(self, *args, **kwargs):
+    #     # check for duplicated title+reps+sets+time
+    #     if not self.cleaned_data.get('title'):
+    #         raise forms.ValidationError('Credentials not matched, try again!')
+    #     return super(CreateExerciseForm, self).clean(*args, **kwargs)

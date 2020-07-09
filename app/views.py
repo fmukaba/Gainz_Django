@@ -90,14 +90,15 @@ def create_exercise(request):
         return render(request, "create_exercise.html", context)
     else:   
         form = CreateExerciseForm(request.POST)
-        errors = form.errors
-        if len(errors) > 0:
+        new_exercise = form.extract()   
+        if not new_exercise:
+            errors = form.errors
             for key, value in errors.items():
                 messages.error(request, value)
             return redirect("/add/create_exercise") 
-        new_exercise = form.save(commit=False)
-        print(new_exercise)
-        return  redirect("/add/create_exercise")
+        new_exercise.user = request.user
+        new_exercise.save()
+        return redirect("/list_exercises")
 
 @login_required
 def logout(request):
