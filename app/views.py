@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, logout as auth_logout, login as au
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .forms import RegisterForm, LoginForm, CreateExerciseForm
+from .forms import RegisterForm, LoginForm, CreateExerciseForm, CreateWorkoutForm
 from .models import Workout, Exercise, Customer
 
 def login(request):
@@ -40,7 +40,7 @@ def register(request):
     else: 
         form = UserCreationForm(request.POST) 
         errors = form.errors
-        
+        # make this better, refer to add_exercise()
         if len(errors) > 0:
             for key, value in errors.items():
                 messages.error(request, value)
@@ -87,7 +87,7 @@ def create_exercise(request):
     if request.method == "GET":
         form = CreateExerciseForm()
         context = { "form": form }
-        return render(request, "create_exercise.html", context)
+        return render(request, "create.html", context)
     else:   
         form = CreateExerciseForm(request.POST)
         new_exercise = form.extract()   
@@ -99,6 +99,17 @@ def create_exercise(request):
         new_exercise.user = request.user
         new_exercise.save()
         return redirect("/list_exercises")
+
+
+@login_required
+def create_workout(request):
+    if request.method == "GET":
+        form = CreateWorkoutForm()
+        context = { "form": form }
+        return render(request, "create.html", context)
+    else:   
+        form = CreateWorkoutForm(request.POST)
+        return redirect("/add/create_workout")
 
 @login_required
 def logout(request):

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function(){
     var workout_option = document.getElementById("workout_option");
     workout_option.addEventListener("click", function(){
-        window.location.href = "/create_workout";
+        window.location.href = "add/create_workout";
     });
 
     var exercise_option = document.getElementById("exercise_option");

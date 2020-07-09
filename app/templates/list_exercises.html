@@ -61,7 +61,7 @@
         </tr>
         {% for ex in exercises %}
         <tr>
-            <td>{{ex.title}}</td>
+            <td><a href="{{ ex.link }}">{{ex.title}}</a></td>
             <td>{{ex.sets}}</td>
             <td>{{ex.reps}}</td>          
             <td>{{ex.description}}</td>

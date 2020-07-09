@@ -58,12 +58,18 @@ class CreateExerciseForm(forms.Form):
             return obj
         return None
 
-    # class Meta:
-    #     model = Exercise
-    #     fields = ['title']
-        
-    # def clean(self, *args, **kwargs):
-    #     # check for duplicated title+reps+sets+time
-    #     if not self.cleaned_data.get('title'):
-    #         raise forms.ValidationError('Credentials not matched, try again!')
-    #     return super(CreateExerciseForm, self).clean(*args, **kwargs)
+class CreateWorkoutForm(forms.Form):
+    title = forms.CharField(max_length=50,widget=forms.TextInput, initial=" ")
+    description = forms.CharField(max_length=100, widget=forms.Textarea, initial=" ")
+    
+
+    def extract(self):
+        errors = self.errors
+
+        if self.is_valid():
+            obj = Workout(
+                title=self.cleaned_data['title'],
+                description=self.cleaned_data['description']         
+                )
+            return obj
+        return None
