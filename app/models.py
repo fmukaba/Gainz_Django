@@ -15,7 +15,7 @@ class Customer(models.Model):
     def get_all_exercises(self):
         return self.user.exercises.all()
     def get_all_workouts(self):
-        pass
+        return self.user.workouts.all()
     def get_exercise(self, id):
         return self.user.exercises.get(id=id)
     def get_workout(self, id):

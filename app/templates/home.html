@@ -52,6 +52,22 @@
     <h1>
         Welcome Home  {{ user.username }}<br>
         Here are your workouts for today
+
+        <h1>List of all workouts</h1>
+        <table class="table table-striped">
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Actions</th>
+            </tr>
+            {% for w in workouts %}
+            <tr>
+                <td>{{w.title}}</a></td>     
+                <td>{{w.description}}</td>
+                <td>{{w.id}}</td>
+            </tr>  
+            {% endfor %}
+        </table>
     </h1>
     
     

@@ -69,7 +69,15 @@ def register(request):
 
 @login_required
 def home(request):
-    return render(request, "home.html")
+    customer = request.user.customer
+    workouts = customer.get_all_workouts()
+    # get exercises for each workout
+    # for w in workouts:
+    #     print(w.exercises.all()) 
+
+    context = {'workouts': workouts}
+    
+    return render(request, "home.html", context)
 
 @login_required
 def list_exercises(request):
