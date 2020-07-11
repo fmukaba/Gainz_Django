@@ -59,9 +59,9 @@ class CreateExerciseForm(forms.Form):
         return None
 
 class CreateWorkoutForm(forms.Form):
+    # user_id = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     title = forms.CharField(max_length=50,widget=forms.TextInput, initial=" ")
     description = forms.CharField(max_length=100, widget=forms.Textarea, initial=" ")
-    
 
     def extract(self):
         errors = self.errors
@@ -73,3 +73,4 @@ class CreateWorkoutForm(forms.Form):
                 )
             return obj
         return None
+

@@ -103,12 +103,30 @@ def create_exercise(request):
 
 @login_required
 def create_workout(request):
+    customer = request.user.customer
     if request.method == "GET":
-        form = CreateWorkoutForm()
-        context = { "form": form }
+        exercises = customer.get_all_exercises()
+        context = {'exercises': exercises}
         return render(request, "create.html", context)
     else:   
+        selected_exercises = request.POST.getlist("exercise")
+        selected_days = request.POST.getlist("day")
         form = CreateWorkoutForm(request.POST)
+        new_workout = form.extract()
+        print(new_workout)
+        if not new_workout:
+            errors = form.errors
+            for key, value in errors.items():
+                messages.error(request, value)
+            return redirect("/add/create_workout")
+        new_workout.user = request.user
+        new_workout.save()
+        for id in selected_exercises:
+            exercise = customer.get_exercise(id)
+            new_workout.exercises.add(exercise)
+        # for k in selected_days:
+        #     new_workout.schedule(k)
+
         return redirect("/add/create_workout")
 
 @login_required

@@ -8,4 +8,6 @@ document.addEventListener('DOMContentLoaded', function(){
     exercise_option.addEventListener("click", function(){
         window.location.href = "/add/create_exercise";
     });
+
+    
 });
