@@ -26,19 +26,20 @@ class Customer(models.Model):
         today = datetime.datetime.today().weekday()
         all_workouts = self.user.workouts.all()
         for w in all_workouts:
-            if today == 0 and w.schedule.monday:
+            schedule = w.schedule
+            if today == 0 and schedule.monday:
                 workouts.append(w)
-            elif today == 1 and w.schedule.tuesday:
+            elif today == 1 and schedule.tuesday:
                 workouts.append(w)
-            elif today == 2 and w.schedule.wednesday:
+            elif today == 2 and schedule.wednesday:
                 workouts.append(w)
-            elif today == 3 and w.schedule.thursday:
+            elif today == 3 and schedule.thursday:
                 workouts.append(w)
-            elif today == 4 and w.schedule.friday:
+            elif today == 4 and schedule.friday:
                 workouts.append(w)
-            elif today == 5 and w.schedule.saturday:
+            elif today == 5 and schedule.saturday:
                 workouts.append(w)
-            elif today == 6 and w.schedule.sunday:
+            elif today == 6 and schedule.sunday:
                 workouts.append(w)
         return workouts
                 

@@ -141,13 +141,14 @@ def create_workout(request):
             exercise = customer.get_exercise(id)
             new_workout.exercises.add(exercise)
 
-        return redirect("/home")
+        return redirect("/schedule")
 
 @login_required
 def schedule(request):
     customer = request.user.customer
-    customer.get_today_workout()
-    return render(request, 'schedule.html')
+    workouts = customer.get_today_workout()
+    context = {'workouts': workouts }
+    return render(request, 'schedule.html', context)
 
 @login_required
 def logout(request):
