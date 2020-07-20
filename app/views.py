@@ -70,13 +70,8 @@ def register(request):
 @login_required
 def home(request):
     customer = request.user.customer
-    workouts = customer.get_all_workouts()
-    # get exercises for each workout
-    # for w in workouts:
-    #     print(w.exercises.all()) 
-
-    context = {'workouts': workouts}
-    
+    workouts = customer.get_all_workouts() 
+    context = {'workouts': workouts} 
     return render(request, "home.html", context)
 
 @login_required
@@ -85,6 +80,13 @@ def list_exercises(request):
     exercises = customer.get_all_exercises()
     context = {'exercises': exercises}
     return render(request, "list_exercises.html", context)
+
+@login_required
+def list_workouts(request):
+    customer = request.user.customer
+    workouts = customer.get_all_workouts()
+    context = {'workouts': workouts}
+    return render(request, "list_workouts.html", context)
 
 @login_required
 def add(request):
@@ -108,7 +110,6 @@ def create_exercise(request):
         new_exercise.save()
         return redirect("/list_exercises")
 
-
 @login_required
 def create_workout(request):
     customer = request.user.customer
@@ -121,21 +122,29 @@ def create_workout(request):
         selected_days = request.POST.getlist("day")
         form = CreateWorkoutForm(request.POST)
         new_workout = form.extract()
-        print(new_workout)
         if not new_workout:
             errors = form.errors
             for key, value in errors.items():
                 messages.error(request, value)
             return redirect("/add/create_workout")
         new_workout.user = request.user
+        # schedule
+        new_schedule = new_workout.create_schedule()
+        new_schedule.save()
+        new_workout.schedule = new_schedule
+        for k in selected_days:
+            new_workout.set_schedule(k)
+        
         new_workout.save()
         for id in selected_exercises:
             exercise = customer.get_exercise(id)
             new_workout.exercises.add(exercise)
-        # for k in selected_days:
-        #     new_workout.schedule(k)
 
-        return redirect("/add/create_workout")
+        return redirect("/home")
+
+@login_required
+def schedule(request):
+    return render(request, 'schedule.html')
 
 @login_required
 def logout(request):

@@ -15,7 +15,8 @@
         .navbar {
             background: #cf1010;  /* fallback for old browsers */
             background: -webkit-linear-gradient(to right, #0088ce, #005b94);  /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right,#005b94, #5bc0de ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */         
+            background: linear-gradient(to right,#005b94, #5bc0de ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            
         }
     </style>
 </head>
@@ -49,11 +50,12 @@
                 </li>
             </ul>
         </div>
-    </nav>     
-    
+    </nav>    
+
     <h1>
         Welcome Home  {{ user.username }}<br>
         Here are your workouts for today
+        <h1>List of all workouts</h1>
         <table class="table table-striped">
             <tr>
                 <th scope="col">Title</th>
@@ -61,7 +63,7 @@
                 <th scope="col">Actions</th>
             </tr>
             {% for w in workouts %}
-            <tr>s
+            <tr>
                 <td>{{w.title}}</a></td>     
                 <td>{{w.description}}</td>
                 <td>{{w.id}}</td>
@@ -69,7 +71,6 @@
             {% endfor %}
         </table>
     </h1>
-
-    <a href="home/schedule"> Schedule workouts</a>
+    <a href="/home"> back</a>
 </body>
 </html>

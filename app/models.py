@@ -20,15 +20,35 @@ class Customer(models.Model):
         return self.user.exercises.get(id=id)
     def get_workout(self, id):
         pass
+    def get_today_workout(self):
+        pass
+
+#  days a workout is scheduled on       
+class Schedule(models.Model):
+    monday = models.BooleanField()
+    tuesday = models.BooleanField()
+    wednesday = models.BooleanField()
+    thursday = models.BooleanField()
+    friday = models.BooleanField()
+    saturday = models.BooleanField()
+    sunday = models.BooleanField()
+    # workout - workout linked to this schedule
+
+    def __repr__(self):
+        return f"monday: {self.monday}, tuesday: {self.tuesday}, friday: {self.friday}"
+    
+    def __str__(self):
+        return f"monday: {self.monday}, tuesday: {self.tuesday}, friday: {self.friday}"
 
 class Workout(models.Model):
+    
     title = models.CharField(max_length=50)
     description = models.TextField()
     user = models.ForeignKey(User, related_name="workouts", on_delete = models.CASCADE)
+    schedule = models.OneToOneField(Schedule, related_name="workout" ,on_delete = models.CASCADE)
     # exercises - list of all exercises belonging
     # days - list of days scheduled
     def get_exercises(self):
-        print(type(self.exercises.all()))
         return self.exercises.all()
 
     def __repr__(self):
@@ -37,9 +57,31 @@ class Workout(models.Model):
     def __str__(self):
         return f"title: {self.title}, description: {self.description}"
 
-    def schedule(self, day):
-        # if day == 0:
-        pass
+    def create_schedule(self): 
+        return Schedule(monday=False, tuesday=False, 
+                        wednesday=False, thursday=False,
+                        friday=False, saturday=False, sunday=False)
+                        
+    def set_schedule(self, day):
+        schedule = self.schedule
+        if day == 1:
+           schedule.monday = True
+        elif day == 2:
+           schedule.tuesday = True
+        elif day == 3:
+           schedule.wednesday = True
+        elif day == 4:
+           schedule.thursday = True
+        elif day == 5:
+           schedule.friday = True
+        elif day == 6:
+           schedule.saturday = True
+        elif day == 7:
+           schedule.sunday = True 
+        self.schedule = schedule
+        self.save()
+        print(self.schedule)
+         
 
 class Exercise(models.Model):
     title = models.CharField(max_length=50)
@@ -57,13 +99,3 @@ class Exercise(models.Model):
     def __str__(self):
         return f"title: {self.title}, sets: {self.sets}, description: {self.description}"
         
-#  days a workout is scheduled on       
-class Workout_days(models.Model):
-    monday = models.BooleanField()
-    tuesday = models.BooleanField()
-    wednesday = models.BooleanField()
-    thursday = models.BooleanField()
-    friday = models.BooleanField()
-    saturday = models.BooleanField()
-    sunday = models.BooleanField()
-    workouts = models.ForeignKey(Workout, related_name="days",on_delete = models.CASCADE)
