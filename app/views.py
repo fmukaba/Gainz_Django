@@ -132,6 +132,7 @@ def create_workout(request):
         new_schedule = new_workout.create_schedule()
         new_schedule.save()
         new_workout.schedule = new_schedule
+
         for k in selected_days:
             new_workout.set_schedule(k)
         
@@ -144,6 +145,8 @@ def create_workout(request):
 
 @login_required
 def schedule(request):
+    customer = request.user.customer
+    customer.get_today_workout()
     return render(request, 'schedule.html')
 
 @login_required

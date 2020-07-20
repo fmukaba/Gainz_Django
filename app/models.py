@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import re
+import datetime
 
 # class auth.models.User():
     # username, password, email, first name, last name  
@@ -19,10 +20,28 @@ class Customer(models.Model):
     def get_exercise(self, id):
         return self.user.exercises.get(id=id)
     def get_workout(self, id):
-        pass
+        return self.user.workouts.get(id=id)
     def get_today_workout(self):
-        pass
-
+        workouts = []
+        today = datetime.datetime.today().weekday()
+        all_workouts = self.user.workouts.all()
+        for w in all_workouts:
+            if today == 0 and w.schedule.monday:
+                workouts.append(w)
+            elif today == 1 and w.schedule.tuesday:
+                workouts.append(w)
+            elif today == 2 and w.schedule.wednesday:
+                workouts.append(w)
+            elif today == 3 and w.schedule.thursday:
+                workouts.append(w)
+            elif today == 4 and w.schedule.friday:
+                workouts.append(w)
+            elif today == 5 and w.schedule.saturday:
+                workouts.append(w)
+            elif today == 6 and w.schedule.sunday:
+                workouts.append(w)
+        return workouts
+                
 #  days a workout is scheduled on       
 class Schedule(models.Model):
     monday = models.BooleanField()
@@ -61,28 +80,26 @@ class Workout(models.Model):
         return Schedule(monday=False, tuesday=False, 
                         wednesday=False, thursday=False,
                         friday=False, saturday=False, sunday=False)
-                        
+
     def set_schedule(self, day):
         schedule = self.schedule
-        if day == 1:
+        day = int(day)
+        if day == 0:
            schedule.monday = True
-        elif day == 2:
+        elif day == 1:
            schedule.tuesday = True
-        elif day == 3:
+        elif day == 2:
            schedule.wednesday = True
-        elif day == 4:
+        elif day == 3:
            schedule.thursday = True
-        elif day == 5:
+        elif day == 4:
            schedule.friday = True
-        elif day == 6:
+        elif day == 5:
            schedule.saturday = True
-        elif day == 7:
+        elif day == 6:
            schedule.sunday = True 
-        self.schedule = schedule
-        self.save()
-        print(self.schedule)
+        schedule.save()
          
-
 class Exercise(models.Model):
     title = models.CharField(max_length=50)
     sets = models.IntegerField()
