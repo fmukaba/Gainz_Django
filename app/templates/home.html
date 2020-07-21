@@ -10,7 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-
+    <script src="{% static 'javascripts/home.js' %}"></script></script>
     <style>
         .navbar {
             background: #cf1010;  /* fallback for old browsers */
@@ -20,56 +20,59 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-info navbar-dark fixed-top py-2">
-        <a class="navbar-brand" href="/home">Gainz</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav navbar-sidenav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/add">Add</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/list_exercises">Exercises</a>
-                </li> 
-                <li class="nav-item">
-                    <a class="nav-link" href="/list_workouts">Workouts</a>
-                </li> 
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/help">Help</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                </li>
-            </ul>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-info navbar-dark fixed-top py-2">
+            <a class="navbar-brand" href="/home">Gainz</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav navbar-sidenav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/list_workouts">Workouts</a>
+                    </li> 
+                    <li class="nav-item">
+                        <a class="nav-link" href="/list_exercises">Exercises</a>
+                    </li>      
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/help">Help</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>   
+    </header>  
+    <main class="container">
+        <h2>
+            <!-- Welcome Home  {{ user.username }}<br> -->
+            Today's workouts 
+        </h2>
+        {% for w in workouts %}
+        <div class=" workout">
+            <div class="row workout">
+                <div class="col">
+                    <h4>{{w.title}}</h4>
+                    <p>{{w.description}}</p>
+                </div>
+                <div class="col">
+                    <button class= "viewBtn" id="viewBtn_{{w.id}}"> View</button>
+                    <button class= "completedBtn"id="completedBtn_{{w.id}}"> Completed</button>
+                </div>
+            </div>
         </div>
-    </nav>     
-    
-    <h1>
-        Welcome Home  {{ user.username }}<br>
-        Here are your workouts for today
-        <table class="table table-striped">
-            <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">Actions</th>
-            </tr>
-            {% for w in workouts %}
-            <tr>s
-                <td>{{w.title}}</a></td>     
-                <td>{{w.description}}</td>
-                <td>{{w.id}}</td>
-            </tr>  
-            {% endfor %}
-        </table>
-    </h1>
-
-    <a href="home/schedule"> Schedule workouts</a>
+        {% endfor %}
+    </main>
+    <footer class="container mt-4">
+        <div>
+           This website was built using <b>Django</b> | Copyright © Francois Mukaba
+        </div>
+    </footer>
 </body>
 </html>

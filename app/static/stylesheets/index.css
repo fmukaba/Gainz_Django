@@ -1,14 +1,46 @@
 body {
-    background-color: aquamarine;
-    
+    background-color: rgb(121, 231, 231); 
+}
+
+header {
+   margin-bottom: 20px;
+   /* background-color: #1dd3bd;  */
 }
 
 main {
-    margin-top: 90px;
+    margin-top: 70px;
+    margin-left: 200px;
+    margin-right: 200px;
 }
 
-h1 {
+footer {
+    background-color:gainsboro;
+    padding-left: 5px;
+    border: black solid thin;
+    border-radius: 8px;
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-top: 20px;
+    margin-bottom: 50px;
     text-align: center;
+    color: maroon;
+}
+.navbar-custom {
+    background-color: #1dd3bd
+}
+
+.navbar-nav > li{
+    padding-left: 15px;
+    font-family: Georgia;
+}
+
+.navbar-light .navbar-nav .nav-item.active .nav-link {
+    color: yellow;
+    text-decoration: underline;
+} 
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: yellow;
 }
 
 button {
@@ -57,6 +89,11 @@ img {
 
 form {
     margin-left: 50px;
+}
+
+.workout {
+    margin-bottom: 10px;
+    margin-top: 20px;
 }
 
 

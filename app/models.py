@@ -12,15 +12,19 @@ import datetime
 class Customer(models.Model):
     username = models.CharField(max_length=30)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    
+
     def get_all_exercises(self):
         return self.user.exercises.all()
+
     def get_all_workouts(self):
         return self.user.workouts.all()
+
     def get_exercise(self, id):
         return self.user.exercises.get(id=id)
+
     def get_workout(self, id):
         return self.user.workouts.get(id=id)
+
     def get_today_workout(self):
         workouts = []
         today = datetime.datetime.today().weekday()

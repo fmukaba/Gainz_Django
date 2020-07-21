@@ -63,14 +63,13 @@ def register(request):
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password1"]
             user = authenticate(username=username, password=password)
-
             auth_login(request, user)
             return redirect("/home")
 
 @login_required
 def home(request):
     customer = request.user.customer
-    workouts = customer.get_all_workouts() 
+    workouts = customer.get_today_workout() 
     context = {'workouts': workouts} 
     return render(request, "home.html", context)
 
@@ -141,7 +140,7 @@ def create_workout(request):
             exercise = customer.get_exercise(id)
             new_workout.exercises.add(exercise)
 
-        return redirect("/schedule")
+        return redirect("/list_workouts")
 
 @login_required
 def schedule(request):
@@ -149,6 +148,19 @@ def schedule(request):
     workouts = customer.get_today_workout()
     context = {'workouts': workouts }
     return render(request, 'schedule.html', context)
+
+@login_required
+def view_workout(request, id):
+    customer = request.user.customer
+    workout = customer.get_workout(id)
+    context = {'workout': workout }
+    return render(request, 'view_workout.html', context)
+
+@login_required
+def completed_workout(request, id):
+    customer = request.user.customer
+    workout = customer.complete_workout(id)
+    return render(request, 'view_workout.html', context)
 
 @login_required
 def logout(request):
