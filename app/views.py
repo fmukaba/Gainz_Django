@@ -159,8 +159,8 @@ def view_workout(request, id):
 @login_required
 def completed_workout(request, id):
     customer = request.user.customer
-    workout = customer.complete_workout(id)
-    return render(request, 'view_workout.html', context)
+    workout = customer.completed_workout(id)
+    return redirect('/home')
 
 @login_required
 def logout(request):
