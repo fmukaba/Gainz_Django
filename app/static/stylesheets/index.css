@@ -9,8 +9,6 @@ header {
 
 main {
     margin-top: 70px;
-    margin-left: 200px;
-    margin-right: 200px;
 }
 
 footer {
@@ -34,20 +32,20 @@ footer {
     font-family: Georgia;
 }
 
-.navbar-light .navbar-nav .nav-item.active .nav-link {
-    color: yellow;
-    text-decoration: underline;
+.navbar-dark .navbar-nav .nav-item.active .nav-link {
+    color: yellow; 
 } 
 
-.navbar-light .navbar-nav .nav-link:hover {
+.navbar-dark .navbar-nav .nav-link:hover {
     color: yellow;
 }
 
 button {
     background-color: brown;
     color: white;
-    padding: 10px;
+    padding: 7px;
     border-radius: 20px;
+    margin-right: 10px;
 }
 
 .left {

@@ -87,16 +87,13 @@ def list_workouts(request):
     context = {'workouts': workouts}
     return render(request, "list_workouts.html", context)
 
-@login_required
-def add(request):
-    return render(request, "add.html")
 
 @login_required
-def create_exercise(request):
+def add_exercise(request):
     if request.method == "GET":
         form = CreateExerciseForm()
         context = { "form": form }
-        return render(request, "create.html", context)
+        return render(request, "add.html", context)
     else:   
         form = CreateExerciseForm(request.POST)
         new_exercise = form.extract()   
@@ -104,18 +101,18 @@ def create_exercise(request):
             errors = form.errors
             for key, value in errors.items():
                 messages.error(request, value)
-            return redirect("/add/create_exercise") 
+            return redirect("/add_exercise") 
         new_exercise.user = request.user
         new_exercise.save()
         return redirect("/list_exercises")
 
 @login_required
-def create_workout(request):
+def add_workout(request):
     customer = request.user.customer
     if request.method == "GET":
         exercises = customer.get_all_exercises()
         context = {'exercises': exercises}
-        return render(request, "create.html", context)
+        return render(request, "add.html", context)
     else:   
         selected_exercises = request.POST.getlist("exercise")
         selected_days = request.POST.getlist("day")
@@ -125,7 +122,7 @@ def create_workout(request):
             errors = form.errors
             for key, value in errors.items():
                 messages.error(request, value)
-            return redirect("/add/create_workout")
+            return redirect("/add_workout")
         new_workout.user = request.user
         # schedule
         new_schedule = new_workout.create_schedule()
@@ -156,6 +153,7 @@ def view_workout(request, id):
     context = {'workout': workout }
     return render(request, 'view_workout.html', context)
 
+# make sure id is id of one of the user's workouts
 @login_required
 def completed_workout(request, id):
     customer = request.user.customer

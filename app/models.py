@@ -46,11 +46,14 @@ class Customer(models.Model):
             elif today == 6 and schedule.sunday:
                 workouts.append(w)
         return workouts
+    def check_id(self, id):
+        pass
+    
     def completed_workout(self, id):
         today = datetime.datetime.today().weekday()
         workout = self.user.workouts.get(id=id)
         workout.unschedule_today()
-
+    
 #  days a workout is scheduled on       
 class Schedule(models.Model):
     monday = models.BooleanField()
