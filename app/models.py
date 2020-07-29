@@ -56,7 +56,7 @@ class Customer(models.Model):
     
     def delete_workout(self, id):
         w = self.user.workouts.get(id=id)
-        w.delete()
+        w.schedule.delete() # Cascade deletes workout
 
     def delete_exercise(self, id):
         ex = self.user.exercises.get(id=id)
