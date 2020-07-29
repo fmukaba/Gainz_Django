@@ -151,7 +151,15 @@ def view_workout(request, id):
     customer = request.user.customer
     workout = customer.get_workout(id)
     context = {'workout': workout }
-    return render(request, 'view_workout.html', context)
+    return render(request, 'show.html', context)
+
+@login_required
+def view_exercise(request, id):
+    customer = request.user.customer
+    exercise = customer.get_exercise(id)
+    context = {'exercise': exercise }
+    return render(request, 'show.html', context)
+
 
 # make sure id is id of one of the user's workouts
 @login_required

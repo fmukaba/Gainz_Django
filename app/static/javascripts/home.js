@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
         viewBtns[i].addEventListener('click', function() {
             var id = viewBtns[i].id;
             var num = id.split("_")[1];
-            window.location.href = "view/"+num;
+            window.location.href = "view_workout/"+num;
         });
     } 
 

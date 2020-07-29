@@ -25,13 +25,24 @@
     </header>  
     <main class="container">
         <button id="backBtn">back</button>
+        {% if workout %}
         <h1>{{workout.title}}</h1>
         <h2>{{workout.description}}</h2>
         <h3>
             {% for ex in workout.exercises.all %}
-            <a href="">{{ex.title}}</a>
+            <a href="../view_exercise/{{ex.id}}">{{ex.title}}</a>
             {% endfor %}
         </h3>
+        {% else %}
+        <h1>{{exercise.title}}</h1>
+        <h2>{{exercise.description}}</h2>
+        <h3>
+            <a href="{{exercise.link}}">link</a>
+        </h3>
+        <h3> sets: {{exercise.sets}} </h3>
+        <h3> reps: {{exercise.reps}} </h3>
+        <h3> time: {{exercise.time}} </h3>
+        {% endif %}
     </main>
     <footer class="container mt-4">
         <div>
