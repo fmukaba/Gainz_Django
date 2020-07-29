@@ -146,6 +146,13 @@ def schedule(request):
     context = {'workouts': workouts }
     return render(request, 'schedule.html', context)
 
+# make sure id is id of one of the user's workouts
+@login_required
+def completed_workout(request, id):
+    customer = request.user.customer
+    workout = customer.completed_workout(id)
+    return redirect('/home')
+
 @login_required
 def view_workout(request, id):
     customer = request.user.customer
@@ -160,13 +167,18 @@ def view_exercise(request, id):
     context = {'exercise': exercise }
     return render(request, 'show.html', context)
 
-
-# make sure id is id of one of the user's workouts
 @login_required
-def completed_workout(request, id):
+def delete_workout(request, id):
     customer = request.user.customer
-    workout = customer.completed_workout(id)
-    return redirect('/home')
+    customer.delete_workout(id)
+    return redirect('/list_workouts')
+
+@login_required
+def delete_exercise(request, id):
+    customer = request.user.customer
+    customer.delete_exercise(id)
+    return redirect('/list_exercises')
+
 
 @login_required
 def logout(request):

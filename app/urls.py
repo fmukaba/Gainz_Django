@@ -14,5 +14,7 @@ urlpatterns = [
     path('add_exercise', views.add_exercise),
     path('completed/<int:id>', views.completed_workout),
     path('view_workout/<int:id>', views.view_workout), 
-    path('view_exercise/<int:id>', views.view_exercise)   
+    path('view_exercise/<int:id>', views.view_exercise),
+    path('delete_workout/<int:id>', views.delete_workout), 
+    path('delete_exercise/<int:id>', views.delete_exercise)
 ]

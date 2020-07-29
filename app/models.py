@@ -54,6 +54,14 @@ class Customer(models.Model):
         workout = self.user.workouts.get(id=id)
         workout.unschedule_today()
     
+    def delete_workout(self, id):
+        w = self.user.workouts.get(id=id)
+        w.delete()
+
+    def delete_exercise(self, id):
+        ex = self.user.exercises.get(id=id)
+        ex.delete()
+    
 #  days a workout is scheduled on       
 class Schedule(models.Model):
     monday = models.BooleanField()
