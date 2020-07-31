@@ -204,14 +204,16 @@ def edit_exercise(request, id):
             for key, value in errors.items():
                 messages.error(request, value)
             return redirect("/edit_exercise/" + str(exercise.id)) 
-
-        exercise.title = new_exercise.title
-        exercise.reps = new_exercise.reps
-        exercise.sets = new_exercise.sets
-        exercise.link = new_exercise.link
-        exercise.time = new_exercise.time
-        exercise.description = new_exercise.description
-        exercise.save()
+        new_exercise.user = request.user
+        new_exercise.id = exercise.id
+        new_exercise.save()
+        # exercise.title = new_exercise.title
+        # exercise.reps = new_exercise.reps
+        # exercise.sets = new_exercise.sets
+        # exercise.link = new_exercise.link
+        # exercise.time = new_exercise.time
+        # exercise.description = new_exercise.description
+        # exercise.save()
         return redirect("/view_exercise/"+ str(exercise.id))
 
 @login_required
@@ -228,24 +230,25 @@ def edit_workout(request, id):
         selected_exercises = request.POST.getlist("exercise")
         selected_days = request.POST.getlist("day")
         form = CreateWorkoutForm(request.POST)
-        new_workout = form.extract()
-        if not new_workout:
+        updated_workout = form.extract()
+        if not updated_workout:
             errors = form.errors
             for key, value in errors.items():
                 messages.error(request, value)
             return redirect("/edit_workout/" + str(workout.id))
-        new_workout.user = request.user
-        # schedule
-        new_schedule = new_workout.create_schedule()
-        new_schedule.save()
-        new_workout.schedule = new_schedule
+        updated_workout.user = request.user
+        # update schedule
+        updated_schedule = updated_workout.create_schedule()
+        updated_schedule.id = workout.schedule.id
+        updated_workout.schedule = updated_schedule
 
         for k in selected_days:
-            new_workout.set_schedule(k)
-        
-        new_workout.save()
+            updated_workout.set_schedule(k)
+        updated_workout.id = workout.id
+        updated_workout.save()
+        updated_workout.exercises.clear()
         for id in selected_exercises:
             exercise = customer.get_exercise(id)
-            new_workout.exercises.add(exercise)
+            updated_workout.exercises.add(exercise)
 
         return redirect("/view_workout/" + str(workout.id))
