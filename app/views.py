@@ -203,34 +203,49 @@ def edit_exercise(request, id):
             errors = form.errors
             for key, value in errors.items():
                 messages.error(request, value)
-            return redirect("/edit_exercise/" + exercise.id) 
-            
+            return redirect("/edit_exercise/" + str(exercise.id)) 
+
         exercise.title = new_exercise.title
         exercise.reps = new_exercise.reps
         exercise.sets = new_exercise.sets
         exercise.link = new_exercise.link
-        exercise.description = new_exercise.description
         exercise.time = new_exercise.time
+        exercise.description = new_exercise.description
         exercise.save()
-
-        return redirect("/list_exercises")
+        return redirect("/view_exercise/"+ str(exercise.id))
 
 @login_required
 def edit_workout(request, id):
     customer = request.user.customer
-    exercise = customer.get_exercise(id)
-    
+    workout = customer.get_workout(id)
+
     if request.method == "GET":
-        context = {'exercise': exercise }
+        all_exercises = customer.get_all_exercises()
+        my_exercises = workout.get_exercises()
+        context = {'workout': workout, 'all_exercises': all_exercises, 'my_exercises': my_exercises, 'schedule': workout.schedule}
         return render(request, "edit.html", context)
     else:   
-        form = CreateExerciseForm(request.POST)
-        new_exercise = form.extract()   
-        if not new_exercise:
+        selected_exercises = request.POST.getlist("exercise")
+        selected_days = request.POST.getlist("day")
+        form = CreateWorkoutForm(request.POST)
+        new_workout = form.extract()
+        if not new_workout:
             errors = form.errors
             for key, value in errors.items():
                 messages.error(request, value)
-            return redirect("/add_exercise") 
-        new_exercise.user = request.user
-        new_exercise.save()
-        return redirect("/list_exercises")
+            return redirect("/edit_workout/" + str(workout.id))
+        new_workout.user = request.user
+        # schedule
+        new_schedule = new_workout.create_schedule()
+        new_schedule.save()
+        new_workout.schedule = new_schedule
+
+        for k in selected_days:
+            new_workout.set_schedule(k)
+        
+        new_workout.save()
+        for id in selected_exercises:
+            exercise = customer.get_exercise(id)
+            new_workout.exercises.add(exercise)
+
+        return redirect("/view_workout/" + str(workout.id))
