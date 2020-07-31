@@ -179,7 +179,6 @@ def delete_exercise(request, id):
     customer.delete_exercise(id)
     return redirect('/list_exercises')
 
-
 @login_required
 def logout(request):
     auth_logout(request)
@@ -188,3 +187,50 @@ def logout(request):
 @login_required
 def help(request):
     return render(request, "help.html")
+
+@login_required
+def edit_exercise(request, id):
+    customer = request.user.customer
+    exercise = customer.get_exercise(id)
+    
+    if request.method == "GET":
+        context = {'exercise': exercise }
+        return render(request, "edit.html", context)
+    else:   
+        form = CreateExerciseForm(request.POST)
+        new_exercise = form.extract()   
+        if not new_exercise:
+            errors = form.errors
+            for key, value in errors.items():
+                messages.error(request, value)
+            return redirect("/edit_exercise/" + exercise.id) 
+            
+        exercise.title = new_exercise.title
+        exercise.reps = new_exercise.reps
+        exercise.sets = new_exercise.sets
+        exercise.link = new_exercise.link
+        exercise.description = new_exercise.description
+        exercise.time = new_exercise.time
+        exercise.save()
+
+        return redirect("/list_exercises")
+
+@login_required
+def edit_workout(request, id):
+    customer = request.user.customer
+    exercise = customer.get_exercise(id)
+    
+    if request.method == "GET":
+        context = {'exercise': exercise }
+        return render(request, "edit.html", context)
+    else:   
+        form = CreateExerciseForm(request.POST)
+        new_exercise = form.extract()   
+        if not new_exercise:
+            errors = form.errors
+            for key, value in errors.items():
+                messages.error(request, value)
+            return redirect("/add_exercise") 
+        new_exercise.user = request.user
+        new_exercise.save()
+        return redirect("/list_exercises")

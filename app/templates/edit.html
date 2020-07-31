@@ -56,11 +56,34 @@
             {% endfor %}
         </ul>
         {% endif %}
-        {% if form %}
-        <form method="post">
+        {% if exercise %}
+        <form action="/edit_exercise/{{exercise.id}}" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" value="register">Submit</button>
+            <p>
+                <label for="id_title">Title:</label> 
+                <input type="text" name="title" value="{{exercise.title}}" maxlength="50" required id="id_title">
+            </p>
+            <p>
+                <label for="id_sets">Sets:</label> 
+                <input type="number" name="sets" value="{{exercise.sets}}" required id="id_sets">
+            </p>
+            <p>
+                <label for="id_reps">Reps:</label> 
+                <input type="number" name="reps" value="{{exercise.reps}}" required id="id_reps">
+            </p>
+            <p>
+                <label for="id_time">Time:</label>
+                <input type="number" name="time" value="{{exercise.time}}" required id="id_time">
+            </p>
+            <p>
+                <label for="id_link">Link:</label>
+                <input type="text" name="link" value="{{exercise.link}}" maxlength="1000" required id="id_link">
+            </p>
+            <p>
+                <label for="id_description">Description:</label>
+                <textarea name="description" cols="40" rows="10" maxlength="100" required id="id_description">{{exercise.description}}</textarea>
+            </p>
+            <button type="submit" value="register">Update</button>
         </form>
         {% else %}
 
