@@ -50,26 +50,27 @@
         </nav>   
     </header>  
     <main class="container">
-        <h2>
-            <!-- Welcome Home  {{ user.username }}<br> -->
-            Today's workouts 
-        </h2>
-        {% for w in workouts %}
-        <div class=" workout">
-            <div class="row workout">
-                <div class="col">
+        <section class="container">
+            <h2>
+                Coming up today
+                <!-- {{ user.username }} -->
+            </h2>
+        </section>
+        <section class="container">
+            {% for w in workouts %}
+            <div class="row workout mt-3 py-2 ">
+                <div class="col ml-5">
                     <h4>{{w.title}}</h4>
-                    <p>{{w.description}}</p>
                 </div>
-                <div class="col">
-                    <button class= "viewBtn" id="viewBtn_{{w.id}}"> View</button>
-                    <button class= "completedBtn"id="completedBtn_{{w.id}}"> Completed</button>
+                <div class="col ml-5">
+                    <button class= "viewBtn ml-5" id="viewBtn_{{w.id}}"> View</button>
+                    <button class= "completedBtn ml-5"id="completedBtn_{{w.id}}"> Completed</button>
                 </div>
             </div>
-        </div>
-        {% endfor %}
+            {% endfor %}   
+        </section>
     </main>
-    <footer class="container mt-4">
+    <footer class="container mt-5">
         <div>
            This website was built using <b>Django</b> | Copyright © Francois Mukaba
         </div>

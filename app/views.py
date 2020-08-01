@@ -241,7 +241,7 @@ def edit_workout(request, id):
         updated_schedule = updated_workout.create_schedule()
         updated_schedule.id = workout.schedule.id
         updated_workout.schedule = updated_schedule
-
+        
         for k in selected_days:
             updated_workout.set_schedule(k)
         updated_workout.id = workout.id
