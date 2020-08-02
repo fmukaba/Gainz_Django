@@ -1,5 +1,7 @@
 body {
-    background-color: rgb(121, 231, 231); 
+    
+    background-color: rgb(130, 121, 175);
+    /* background-color: rgb(121, 231, 231);  */
 }
 
 header {
@@ -46,6 +48,12 @@ button {
     border-radius: 20px;
 }
 
+/* h2 {
+    background-color: blanchedalmond;
+    margin-left: 30px;
+    margin-right: 100px;
+} */
+
 
 
 /* .left {
@@ -86,11 +94,11 @@ form {
 } */
 
 .workout:nth-child(odd) {
-   background-color:yellow;
+   background-color:rgba(255, 255, 0, 0.8);
 }
 
 .workout:nth-child(even) {
-    background-color:salmon;
+    background-color:rgba(250, 128, 114, 0.8);
  }
 
 

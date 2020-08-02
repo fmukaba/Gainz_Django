@@ -12,10 +12,13 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="{% static 'javascripts/home.js' %}"></script></script>
     <style>
+        a {
+            color: black;
+        }
         .navbar {
-            background: #cf1010;  /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, #0088ce, #005b94);  /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right,#005b94, #5bc0de ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */         
+            background: #260464;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right,#260464, #4703c4); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right,#260464, #4703c4 ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */         
         }
     </style>
 </head>
@@ -51,16 +54,19 @@
     </header>  
     <main class="container">
         <section class="container">
-            <h2>
-                Coming up today
-                <!-- {{ user.username }} -->
-            </h2>
+            <div class="row mt-3 py-2 ">
+                <h2>
+                    Coming up
+                    <!-- {{ user.username }} -->
+                </h2>
+            </div>
+           
         </section>
         <section class="container">
             {% for w in workouts %}
             <div class="row workout mt-3 py-2 ">
                 <div class="col ml-5">
-                    <h4>{{w.title}}</h4>
+                    <a href="view_workout/{{w.id}}"><h4>{{w.title}}</h4></a>
                 </div>
                 <div class="col ml-5">
                     <button class= "viewBtn ml-5" id="viewBtn_{{w.id}}"> View</button>
