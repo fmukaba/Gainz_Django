@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'aez=vgy+)3@2@^mzd!&ztj(q9-y(se8rdxnk(mi$8_d43rot0r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,17 +39,23 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'storages'
 ]
 
 MIDDLEWARE = [
+    # 'django.middleware.cache.UpdateCacheMiddleware',   
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# CACHE_MIDDLEWARE_ALIAS = 'default' 
+# CACHE_MIDDLEWARE_SECONDS = '600'
 
 ROOT_URLCONF = 'gainz.urls'
 
@@ -77,11 +83,24 @@ WSGI_APPLICATION = 'gainz.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'gainz',
+        'USER' : 'fxkiko@getgainz',
+        'PASSWORD': 'Getgainzdu777@',
+        'HOST': 'getgainz.postgres.database.azure.com',
+        'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',
+        }
     }
 }
 
+CACHES = {
+   'default': {
+      'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+      'LOCATION': 'gainz'
+   }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -124,3 +143,11 @@ STATIC_URL = '/static/'
 LOGIN_URL = '/login'
 
 LOGIN_REDIRECT_URL = '/home'
+
+STATICFILES_STORAGE = 'gainz.custom_azure.AzureStaticStorage'
+
+STATIC_LOCATION = "static"
+
+AZURE_ACCOUNT_NAME = "getgainzstorage"
+AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'

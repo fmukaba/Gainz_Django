@@ -11,7 +11,6 @@ def login(request):
     if request.method == "GET":
         form = LoginForm()
         context = { "logForm": form }
-
         return render(request, "login.html", context)
     else:   
         next = request.POST['next']
