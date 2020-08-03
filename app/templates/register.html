@@ -7,21 +7,58 @@
     {% load static %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'stylesheets/index.css' %}">
+    <style>
+        input, textarea {
+            width: 100%;
+            padding: 5px!important;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box; 
+            border-radius: 3px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: rgb(169,169,169)
+        }
+        label { 
+            font-weight: bold;
+        }
+
+        .messages li li {
+            border: 1px solid salmon;
+            color: white;
+            background: rgba(255, 0, 0, 0.15);
+            list-style-position: inside;
+            display: block;
+            font-size: 1.2em;
+            margin: 0 0 15px;
+            padding: 4px 5px;
+            text-align: center;    
+            border-radius: 3px;
+        }   
+    </style>
 </head>
 <body>
-    <h1> Register </h1> 
-    {% if messages %}
-    <ul class="messages">    
-        {% for message in messages %}    
-            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <form class="" action="/register" method="post">
-        {% csrf_token %}
-        {{ regForm.as_p }}
-      
-        <button type="submit" value="register">Submit</button>
-      </form>
+    <main class="container row justify-content-center">
+        <div>
+            <div class="col">
+                <h1> Register </h1> 
+                {% if messages %}
+                <ul class="messages">    
+                    {% for message in messages %}    
+                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <div class="mt-4 mb-5" >
+                    <form action="/register" method="post">
+                        {% csrf_token %}
+                        {{ regForm.as_p }}
+                    
+                        <button type="submit" value="register">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>

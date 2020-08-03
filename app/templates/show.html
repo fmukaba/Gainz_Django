@@ -10,38 +10,92 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function(){
-            var backBtn = document.getElementById("backBtn");
-            backBtn.addEventListener('click', function(){
-                window.history.back();
-            })
-        })
-    </script>
+    <style>
+        a {
+           color: yellow;
+        }
+        td {
+           color: white; 
+        }
+        .navbar {
+           background: #260464;  /* fallback for old browsers */
+           background: -webkit-linear-gradient(to right,#260464, #360691); /* Chrome 10-25, Safari 5.1-6 */
+           background: linear-gradient(to right,#260464, #4703c4 ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */         
+        }
+   </style>
 </head>
 <body>
     <header>
-        
-    </header>  
+        <nav class="navbar navbar-expand-lg bg-info navbar-dark fixed-top py-2">
+            <a class="navbar-brand" href="/home">Gainz</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav navbar-sidenav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/list_workouts">Workouts</a>
+                    </li> 
+                    <li class="nav-item">
+                        <a class="nav-link" href="/list_exercises">Exercises</a>
+                    </li> 
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/help">Help</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav> 
+    </header> 
     <main class="container">
-        <button id="backBtn">back</button>
-        {% if workout %}
-        <h1>{{workout.title}}</h1>
-        <h2>{{workout.description}}</h2>
-        <h3>
-            {% for ex in workout.exercises.all %}
-            <a href="../view_exercise/{{ex.id}}">{{ex.title}}</a>
-            {% endfor %}
-        </h3>
+        <div class="container">
+            {% if workout %}
+            <h1>Workout: {{workout.title}}</h1>
+            <h3>Description: {{workout.description}}</h3>
+            <h3>Exercises </h3>
+        </div>
+        <div class="container">
+            <table class="table table-striped">
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Reps</th>
+                    <th scope="col">Sets</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                {% for ex in workout.exercises.all %}
+                <tr>
+                    <td><a href="{{ ex.link }}" target="_blank">{{ex.title}}</a></td> 
+                    <td>{{ex.reps}}</td> 
+                    <td>{{ex.sets}}</td>
+                    <td>{{ex.time}} s</td>         
+                    <td>{{ex.description}}</td>
+                    <td>
+                        <a href="/view_exercise/{{ex.id}}">show</a>
+                        <a href="/edit_exercise/{{ex.id}}">edit</a>
+                        <a href="/delete_exercise/{{ex.id}}">delete</a>
+                    </td>
+                </tr>  
+                {% endfor %}
+            </table>
+        </div>
         {% else %}
-        <h1>{{exercise.title}}</h1>
-        <h2>{{exercise.description}}</h2>
+        <h1> Exercise: {{exercise.title}}</h1>
+        <h3> set(s): {{exercise.sets}} </h3>
+        <h3> rep(s): {{exercise.reps}} </h3>
+        <h3> time: {{exercise.time}} s</h3>
         <h3>
-            <a href="{{exercise.link}}">link</a>
+            External link: <a href="{{exercise.link}}" target="_blank">here</a>
         </h3>
-        <h3> sets: {{exercise.sets}} </h3>
-        <h3> reps: {{exercise.reps}} </h3>
-        <h3> time: {{exercise.time}} </h3>
+        <h3>Description: {{exercise.description}}</h3>
         {% endif %}
     </main>
     <footer class="container mt-4">

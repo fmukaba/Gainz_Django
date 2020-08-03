@@ -57,20 +57,19 @@
             <div class="row mt-3 py-2 ">
                 <h2>
                     Coming up
-                    <!-- {{ user.username }} -->
                 </h2>
             </div>
            
         </section>
         <section class="container">
             {% for w in workouts %}
-            <div class="row workout mt-3 py-2 ">
+            <div class="container row workout mt-3 py-2 ">
                 <div class="col ml-5">
                     <a href="view_workout/{{w.id}}"><h4>{{w.title}}</h4></a>
                 </div>
                 <div class="col ml-5">
-                    <button class= "viewBtn ml-5" id="viewBtn_{{w.id}}"> View</button>
-                    <button class= "completedBtn ml-5"id="completedBtn_{{w.id}}"> Completed</button>
+                    <button class= "viewBtn ml-2" id="viewBtn_{{w.id}}"> View</button>
+                    <button class= "completedBtn ml-2"id="completedBtn_{{w.id}}"> Done</button>
                 </div>
             </div>
             {% endfor %}   

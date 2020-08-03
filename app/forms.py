@@ -5,6 +5,7 @@ from .models import Exercise, Workout
 
 
 class RegisterForm(forms.ModelForm):
+    email =  forms.CharField(max_length=30, widget=forms.TextInput, label="Email")
     username = forms.CharField(max_length=30, widget=forms.TextInput)
     password1 = forms.CharField(max_length=20, widget=forms.PasswordInput, label="Password")
     password2 = forms.CharField(max_length=20, widget=forms.PasswordInput, label="Confirm password")
@@ -36,12 +37,12 @@ class LoginForm(forms.Form):
         return super(LoginForm, self).clean(*args, **kwargs)
 
 class CreateExerciseForm(forms.Form):
-    title = forms.CharField(max_length=50,widget=forms.TextInput, initial=" ")
+    title = forms.CharField(max_length=50,widget=forms.TextInput)
     sets = forms.IntegerField(initial=1)
     reps = forms.IntegerField(initial=1)
     time = forms.IntegerField(initial=1)
-    link = forms.CharField(max_length=1000,widget=forms.TextInput, initial=" ")
-    description = forms.CharField(max_length=100, widget=forms.Textarea, initial=" ")
+    link = forms.CharField(max_length=1000,widget=forms.TextInput)
+    description = forms.CharField(max_length=100, widget=forms.Textarea)
     
     def extract(self):
         errors = self.errors
@@ -59,9 +60,8 @@ class CreateExerciseForm(forms.Form):
         return None
 
 class CreateWorkoutForm(forms.Form):
-    # user_id = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    title = forms.CharField(max_length=50,widget=forms.TextInput, initial=" ")
-    description = forms.CharField(max_length=100, widget=forms.Textarea, initial=" ")
+    title = forms.CharField(max_length=50,widget=forms.TextInput)
+    description = forms.CharField(max_length=100, widget=forms.Textarea)
 
     def extract(self):
         errors = self.errors

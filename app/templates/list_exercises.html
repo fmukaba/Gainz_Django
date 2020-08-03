@@ -13,7 +13,11 @@
 
     <style>
          a {
-            color: white;
+            color: yellow;
+            
+        }
+        td {
+            color: white; 
         }
         .navbar {
             background: #260464;  /* fallback for old browsers */
@@ -61,16 +65,17 @@
         </nav> 
     </header>
     <main class="container">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <h1>Exercises </h1>
-                </div>
-                <div class="col">
-                    <button id="addBtn"> Add + </button>
-                </div>
+        
+        <div class="row">
+            <div class="col mr-5">
+                <h1>Exercises </h1>
+            </div>
+                
+            <div class="col mt-2">
+                <button class="ml-5" id="addBtn"> Add + </button>
             </div>
         </div>
+       
         <table class="table table-striped">
             <tr>
                 <th scope="col">Title</th>
@@ -78,17 +83,15 @@
                 <th scope="col">Sets</th>
                 <th scope="col">Time</th>
                 <th scope="col">Description</th>
-                <th scope="col">Link</th>
                 <th scope="col">Actions</th>
             </tr>
             {% for ex in exercises %}
             <tr>
-                <td><a href="{{ ex.link }}">{{ex.title}}</a></td> 
+                <td><a href="{{ ex.link }}" target="_blank">{{ex.title}}</a></td> 
                 <td>{{ex.reps}}</td> 
                 <td>{{ex.sets}}</td>
-                <td>{{ex.time}}</td>         
+                <td>{{ex.time}} s</td>         
                 <td>{{ex.description}}</td>
-                <td>{{ex.link}}</td>
                 <td>
                     <a href="/view_exercise/{{ex.id}}">show</a>
                     <a href="/edit_exercise/{{ex.id}}">edit</a>
