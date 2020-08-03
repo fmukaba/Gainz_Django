@@ -16,6 +16,37 @@
             background: -webkit-linear-gradient(to right,#260464, #4703c4); /* Chrome 10-25, Safari 5.1-6 */
             background: linear-gradient(to right,#260464, #4703c4 ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */         
         }
+
+        input, textarea {
+        width: 100%;
+        padding: 5px!important;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box; 
+        border-radius: 3px;
+        border-style: solid;
+        border-width: 1px;
+        border-color: rgb(169,169,169)
+        }
+        label { 
+            font-weight: bold;
+        }
+        a {
+            color: yellow;
+        }
+
+        .messages li li {
+            border: 1px solid salmon;
+            color: white;
+            background: rgba(255, 0, 0, 0.15);
+            list-style-position: inside;
+            display: block;
+            font-size: 1.2em;
+            margin: 0 0 3px;
+            padding: 4px 5px;
+            text-align: center;    
+            border-radius: 3px;
+        }   
     </style>
 </head>
 <body>
@@ -38,9 +69,9 @@
                     </li> 
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="/help">Help</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>
                     </li>              
@@ -48,7 +79,7 @@
             </div>
         </nav> 
     </header>
-    <main>
+    <main class="container row justify-content-center">
         {% if messages %}
         <ul class="messages">    
             {% for message in messages %}    
@@ -56,6 +87,7 @@
             {% endfor %}
         </ul>
         {% endif %}
+
         {% if exercise %}
         <form action="/edit_exercise/{{exercise.id}}" method="post">
             {% csrf_token %}
@@ -83,66 +115,98 @@
                 <label for="id_description">Description:</label>
                 <textarea name="description" cols="40" rows="10" maxlength="100" required id="id_description">{{exercise.description}}</textarea>
             </p>
-            <button type="submit" value="register">Update</button>
+            <button class="mt-3" type="submit" value="register">Update</button>
         </form>
         {% else %}
 
-        <!-- USE BOOTSTRAP FOR FORMS -->
+        <!-- Workout form -->
         <form method="post">
             {% csrf_token %}
             <p><label for="id_title">Title:</label> <input type="text" name="title" value="{{workout.title}}" maxlength="50" required id="id_title"></p>
-            <div class="form-group">
-                <label class="form-control" rows="5" for="id_description">Description:</label> <textarea name="description" cols="40" rows="10" maxlength="100" required id="id_description">{{workout.description}}</textarea>
-            </div>
+            <p>
+                <label for="id_description">Description:</label> 
+                <textarea name="description" cols="40" rows="10" maxlength="100" required id="id_description">{{workout.description}}</textarea>
+            </p>
             <p><label>Select exercises:</label></p>
             {% for ex in all_exercises %}
-                {% if ex in my_exercises%}
-                <p><input type="checkbox" id="{{ex.id}}" name="exercise" value="{{ex.id}}" checked><label for="{{ex.id}}"> {{ex.title}}</label></p>
-                {% else %}
-                <p><input type="checkbox" id="{{ex.id}}" name="exercise" value="{{ex.id}}"><label for="{{ex.id}}"> {{ex.title}}</label></p>
-                {% endif %}
+            <div class="row">
+                <div class="col">
+                    <label for="{{ex.id}}"> {{ex.title}}</label>
+                </div>
+                <div class="col">
+                    <input type="checkbox" id="{{ex.id}}" name="exercise" value="{{ex.id}}" {% if ex in my_exercises %} checked {% endif %}>
+                </div>
+            </div>
             {% endfor %}
             <p>Schedule workout:</p>
-            
             <div id="week">
-                {% if schedule.monday %}
-                <input type="checkbox" id="0" name="day" value="0" checked><label for="0"> Monday</label>
-                {% else %}
-                <input type="checkbox" id="0" name="day" value="0"><label for="0"> Monday</label>
-                {% endif %}
-                {% if schedule.tuesday %}
-                <input type="checkbox" id="1" name="day" value="1" checked><label for="1"> Tuesday</label>
-                {% else %}
-                <input type="checkbox" id="1" name="day" value="1"><label for="1"> Tuesday</label>
-                {% endif %}
-                {% if schedule.wednesday %}
-                <input type="checkbox" id="2" name="day" value="2" checked><label for="2"> Wednesday</label>
-                {% else %}
-                <input type="checkbox" id="2" name="day" value="2"><label for="2"> Wednesday</label>
-                {% endif %}
-                {% if schedule.thursday %}
-                <input type="checkbox" id="3" name="day" value="3" checked><label for="3"> Thursday</label>
-                {% else %}
-                <input type="checkbox" id="3" name="day" value="3"><label for="3"> Thursday</label>
-                {% endif %}
-                {% if schedule.friday %}
-                <input type="checkbox" id="4" name="day" value="4" checked><label for="4"> Friday</label>
-                {% else %}
-                <input type="checkbox" id="4" name="day" value="4"><label for="4"> Friday</label>
-                {% endif %}
-                {% if schedule.saturday %}
-                <input type="checkbox" id="5" name="day" value="5" checked><label for="5"> Saturday</label>
-                {% else %}
-                <input type="checkbox" id="5" name="day" value="5"><label for="5"> Saturday</label>
-                {% endif %}
-                {% if schedule.sunday %}
-                <input type="checkbox" id="6" name="day" value="6" checked><label for="6"> Sunday</label>
-                {% else %}
-                <input type="checkbox" id="6" name="day" value="6"><label for="6"> Sunday</label>
-                {% endif %}
-            </div>
+               
+                <div class="row">
+                    <div class="col">
+                        <label for="0">Monday</label>
+                    </div>
+                    <div class="col">     
+                        <input type="checkbox" id="0" name="day" value="0" {% if schedule.monday %} checked {% endif %}>   
+                    </div>
+                </div>
 
-            <button type="submit" value="register">Update</button>
+                <div class="row">
+                    <div class="col">
+                        <label for="1">Tuesday</label>
+                    </div>
+                    <div class="col"> 
+                        <input type="checkbox" id="1" name="day" value="1" {% if schedule.tuesday %} checked {% endif %}>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label for="2">Wednesday</label>
+                    </div>
+                    <div class="col">
+                        
+                        <input type="checkbox" id="2" name="day" value="2" {% if schedule.wednesday %} checked {% endif %}>
+                    
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label for="3">Thursday</label>
+                    </div>
+                    <div class="col">
+                        <input type="checkbox" id="3" name="day" value="3" {% if schedule.thursday %} checked  {% endif %}>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label for="4">Friday</label>
+                    </div>
+                    <div class="col">
+                        <input type="checkbox" id="4" name="day" value="4"   {% if schedule.friday %} checked  {% endif %}>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label for="5">Saturday</label>
+                    </div>
+                    <div class="col">
+                        <input type="checkbox" id="5" name="day" value="5"  {% if schedule.saturday %} checked  {% endif %}>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label for="6">Sunday</label>
+                    </div>
+                    <div class="col">
+                        <input type="checkbox" id="6" name="day" value="6"  {% if schedule.sunday %} checked  {% endif %}>
+                    </div>
+                </div>
+            </div>
+            <button class="mt-3"type="submit" value="register">Update</button>
         </form>      
         {% endif %}
     </main>

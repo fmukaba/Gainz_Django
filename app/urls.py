@@ -18,5 +18,6 @@ urlpatterns = [
     path('delete_workout/<int:id>', views.delete_workout), 
     path('delete_exercise/<int:id>', views.delete_exercise),
     path('edit_workout/<int:id>', views.edit_workout), 
-    path('edit_exercise/<int:id>', views.edit_exercise)
+    path('edit_exercise/<int:id>', views.edit_exercise),
+    path('<path:path>', views.not_found)
 ]

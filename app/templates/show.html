@@ -44,9 +44,9 @@
                     </li> 
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="/help">Help</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>
                     </li>
@@ -68,7 +68,6 @@
                     <th scope="col">Reps</th>
                     <th scope="col">Sets</th>
                     <th scope="col">Time</th>
-                    <th scope="col">Description</th>
                     <th scope="col">Actions</th>
                 </tr>
                 {% for ex in workout.exercises.all %}
@@ -77,7 +76,6 @@
                     <td>{{ex.reps}}</td> 
                     <td>{{ex.sets}}</td>
                     <td>{{ex.time}} s</td>         
-                    <td>{{ex.description}}</td>
                     <td>
                         <a href="/view_exercise/{{ex.id}}">show</a>
                         <a href="/edit_exercise/{{ex.id}}">edit</a>

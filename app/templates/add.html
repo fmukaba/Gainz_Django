@@ -28,9 +28,6 @@
         border-width: 1px;
         border-color: rgb(169,169,169)
         }
-        .exercises {
-           
-        }
         label { 
             font-weight: bold;
         }
@@ -72,9 +69,9 @@
                     </li> 
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="/help">Help</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>
                     </li>              
@@ -92,6 +89,8 @@
                     {% endfor %}
                 </ul>
                 {% endif %}
+
+                <!-- Exercise form -->
                 {% if form %}
                 <form method="post">
                     {% csrf_token %}
@@ -113,14 +112,14 @@
                     </p>
 
                     <p>Select exercises:</p>
-                    <p style="width:inherit">
+                    <p>
                         {% for ex in exercises %}
                         <div class="row">
                             <div class="col">
                                 <label for="{{ex.id}}"> {{ex.title}}</label>
                             </div>
                             <div class="col">
-                                <input type="checkbox" id="{{ex.id}}" name="exercise">
+                                <input type="checkbox" id="{{ex.id}}" name="exercise" value="{{ex.id}}">
                             </div>
                         </div>
                         {% endfor %}

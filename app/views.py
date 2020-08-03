@@ -59,12 +59,14 @@ def register(request):
             new_user.save()
             customer = Customer(user=new_user, username=new_user.username)
             customer.save()
-
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password1"]
             user = authenticate(username=username, password=password)
             auth_login(request, user)
             return redirect("/home")
+
+def not_found(request, path):
+    return render(request, "404.html")
 
 @login_required
 def home(request):
@@ -207,13 +209,6 @@ def edit_exercise(request, id):
         new_exercise.user = request.user
         new_exercise.id = exercise.id
         new_exercise.save()
-        # exercise.title = new_exercise.title
-        # exercise.reps = new_exercise.reps
-        # exercise.sets = new_exercise.sets
-        # exercise.link = new_exercise.link
-        # exercise.time = new_exercise.time
-        # exercise.description = new_exercise.description
-        # exercise.save()
         return redirect("/view_exercise/"+ str(exercise.id))
 
 @login_required

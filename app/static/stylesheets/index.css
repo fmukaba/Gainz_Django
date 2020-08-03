@@ -1,12 +1,9 @@
-body {
-    
+body { 
     background-color: rgb(130, 121, 175);
-    /* background-color: rgb(121, 231, 231);  */
 }
 
 header {
    margin-bottom: 20px;
-   /* background-color: #1dd3bd;  */
 }
 
 main {
@@ -18,10 +15,6 @@ footer {
     padding-left: 5px;
     border: black solid thin;
     border-radius: 8px;
-    /* margin-left: 200px;
-    margin-right: 200px;
-    margin-top: 20px;
-    margin-bottom: 50px; */
     text-align: center;
     color: maroon;
 }
@@ -47,51 +40,6 @@ button {
     color: white;
     border-radius: 20px;
 }
-
-/* h2 {
-    background-color: blanchedalmond;
-    margin-left: 30px;
-    margin-right: 100px;
-} */
-
-
-
-/* .left {
-    margin-left: 100px;
-} */
-
-/* add age */
-/* .main-options {
-    display: flex;
-}
-
-.side {
-    float: left;
-    width: 30%;
-    padding: 10px;
-    border : 1px;
-    border-style: hidden;
-    flex: 1;
-    text-align: center;
-    margin: 20px;
-}
-
-.main {
-    display: flex;
-    height: 300px;
-    align-items: center;
-    justify-self: center;
-    flex-direction: column;
-} 
-
-img {
-    height: 400px;
-    width: 400px;
-}
-
-form {
-    margin-left: 50px;
-} */
 
 .workout:nth-child(odd) {
    background-color:rgba(255, 255, 0, 0.8);
