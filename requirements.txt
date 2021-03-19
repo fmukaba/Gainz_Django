@@ -10,7 +10,7 @@ chardet==3.0.4
 colorama==0.4.3
 cryptography==3.0
 decorator==4.4.2
-Django==2.2.13
+Django==2.2.18
 django-extensions==3.0.2
 django-storages==1.9.1
 graphviz==0.14
