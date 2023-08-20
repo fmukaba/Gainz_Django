@@ -1,4 +1,4 @@
-﻿asgiref==3.2.10
+asgiref==3.2.10
 azure-common==1.1.25
 azure-storage-blob==2.1.0
 azure-storage-common==2.1.0
@@ -15,7 +15,7 @@ django-extensions==3.0.2
 django-storages==1.9.1
 graphviz==0.14
 idna==2.10
-ipython==7.16.1
+ipython==8.10.0
 ipython-genutils==0.2.0
 jedi==0.17.1
 parso==0.7.0
